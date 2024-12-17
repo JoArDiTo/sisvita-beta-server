@@ -1,0 +1,12 @@
+# Variables de entorno
+.env
+
+# Instancias
+instance/
+
+# Logs
+__pycache__/
+
+# Entorno virtual
+venv/
+env/
