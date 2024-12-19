@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify
 from src.api.template_test.service import get_all, get_by_id, calculate_score
-from src.common.utils import getData
 
 from .schema import template_tests_schema, template_test_selected_schema
 from src.api.question.schema import questions_schema
@@ -28,14 +27,12 @@ def get_template_test_by_id(id):
         'alternatives': alternatives_schema.dump(alternatives)
     })
 
-@template_test.route('/<id>/calculate', methods=['POST'])
-def generate_score(id):
-    data = getData()
-    values = data['values']
+@template_test.route('/<id>/calculate/<int:score>', methods=['POST'])
+def generate_score(id, score):
     
-    [score, interpretation] = calculate_score(values, id)
+    interpretation = calculate_score(id, score)
+    
+    if not interpretation:
+        return jsonify({'message': 'No found'}), 404
         
-    return jsonify({
-        'score': score,
-        'interpretation': interpretation
-    })
+    return interpretation
