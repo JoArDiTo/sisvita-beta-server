@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from src.api.template_test.controller import template_test
+from src.common.constants import CLIENT_URL
 from src.common.utils import db
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -10,7 +11,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": os.getenv("CLIENT_URL")}})
+CORS(app, resources={r"/*": {"origins": CLIENT_URL}})
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 DATABASE_CONNECTION = 'sqlite:///' + os.path.join(basedir, 'src/database/sisvita.db')
